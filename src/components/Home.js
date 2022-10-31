@@ -44,7 +44,20 @@ const Home = () => {
     cargarPerros();
   }, []);
 
-  
+  function stringGen(len = 6) {
+    let alphanumeric =
+    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+    let code = new Array();
+
+    for(let i=0; i<len; i++){
+      let index = Math.floor(Math.random() * alphanumeric.length);
+      code.push(alphanumeric.charAt(index));
+    }
+
+    code = code.join("")
+    return code;
+  }
 
   return (
     <Container fixed sx={{ height: 1 }}>
@@ -67,7 +80,7 @@ const Home = () => {
             border: 1,
           borderColor: "red",
           }}
-        >
+        > {stringGen()}
           <Grid item md={6}
           sx={{
             mt: 2,
@@ -76,7 +89,7 @@ const Home = () => {
             overflowY: "scroll",
             border: 1,
           borderColor: "blue",
-          }}>
+          }}> {stringGen()}
             {<img src="https://dog.ceo/api/breeds/image/random"/>}
           </Grid>
         </Grid>
