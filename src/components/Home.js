@@ -24,9 +24,9 @@ const Home = () => {
   const cargarPerros = () => {
     //https://dog.ceo/dog-api/
     //https://dog.ceo/api/breeds/image/random
-    axios.get("Access-Control-Allow-Origin: https://dog.ceo/dog-api/").then(
+    axios.get("Access-Control-Allow-Origin: https://dog.ceo/api/breeds/image/random").then(
       (response) => {
-        setListadoOriginal(response.data.results);
+        setListadoOriginal(response.data.message);
       },
       (error) => {
         console.log(error);
@@ -77,7 +77,9 @@ const Home = () => {
             border: 1,
           borderColor: "blue",
           }}>
-            {<img src="https://dog.ceo/api/breeds/image/random"/>}
+            {listadoOriginal.map((element, index) => (
+              <Poke pokemon={element} key={index} />
+            ))}
           </Grid>
         </Grid>
       </Box>
