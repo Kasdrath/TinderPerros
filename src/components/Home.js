@@ -59,8 +59,9 @@ const Home = () => {
     return code;
   }
 
+
   return (
-    <Container fixed sx={{ height: 1 }}>
+    /*<Container fixed sx={{ height: 1 }}>
       <Box
         sx={{
           border: 1,
@@ -69,7 +70,7 @@ const Home = () => {
           overflowY: "scroll",
         }}
       >
-        <Grid
+        <Grid item md={6}
           container
           spacing={1}
           sx={{
@@ -94,8 +95,42 @@ const Home = () => {
           </Grid>
         </Grid>
       </Box>
-    </Container>
-    
+    </Container>*/
+    <Grid container spacing={2}>
+      <Grid item xs={4}
+      sx={{
+        mt: 2,
+        height: 150,
+        overflow: "hidden",
+        overflowY: "scroll",
+        border: 1,
+      borderColor: "red",
+      }}>
+        <Container>xs=4</Container>
+      </Grid>
+      <Grid item xs={4}
+      sx={{
+        mt: 2,
+        height: 150,
+        overflow: "hidden",
+        overflowY: "scroll",
+        border: 1,
+      borderColor: "blue",
+      }}>
+        <Container>xs=4</Container>
+      </Grid>
+      <Grid item xs={4}
+      sx={{
+        mt: 2,
+        height: 150,
+        overflow: "hidden",
+        overflowY: "scroll",
+        border: 1,
+      borderColor: "red",
+      }}>
+        <Container>xs=4</Container>
+      </Grid>
+    </Grid>
   );
 };
 export default Home;
