@@ -6,6 +6,7 @@ import {
   Container,
   Grid,
   TextField,
+  Typography,
 } from "@mui/material";
 import axios from "axios";
 import Poke from "./Poke";
@@ -117,7 +118,16 @@ const Home = () => {
         border: 1,
       borderColor: "blue",
       }}>
-        <Container>xs=4</Container>
+        <Container>
+          <Card style={{backgroundColor: "yellow"}}>
+            <CardContent>
+              <Typography style={{fontSize: 14}} color="textSecondary" textAlign="center">
+                {stringGen()}
+              </Typography>
+              {<img src="https://dog.ceo/api/breeds/image/random"/>}
+            </CardContent>
+          </Card>
+        </Container>
       </Grid>
       <Grid item xs={4}
       sx={{
