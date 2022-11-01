@@ -8,25 +8,19 @@ import {
   TextField,
 } from "@mui/material";
 import axios from "axios";
-import Poke from "./Poke";
 
 const Home = () => {
 
-  const [listadoOriginal, setListadoOriginal] = useState([]);//Quizas cambiarle los nombres a las listas?
-  const [listadoAuxiliar, setListadoAuxiliar] = useState([]);
-  const [listadoSeleccionado, setListadoSeleccionado] = useState([]);
-
-  //const [buscador, setBuscador] = useState("");
-  const [errors, setErrors] = useState(false);
-
+  const [dog,setDog] = useState("");
+  const [perroarrepentido, setPerroArrepentido] = useState("");
+  const [perrorechazo, setPerroRechazo] = useState([]);
+  const [perroacepto, setPerroAcepto] = useState([]);
   let estilo = { backgroundColor: "red" };
 
-  const cargarPerros = () => {
-    //https://dog.ceo/dog-api/
-    //https://dog.ceo/api/breeds/image/random
-    axios.get("Access-Control-Allow-Origin: https://dog.ceo/api/breeds/image/random").then(
+  const cargarPerro = () => {
+     axios.get("https://dog.ceo/api/breeds/image/random").then(
       (response) => {
-        setListadoOriginal(response.data.message);
+        setDog(response.data.message);
       },
       (error) => {
         console.log(error);
@@ -34,17 +28,35 @@ const Home = () => {
     );
   };
 
- /**  const handleInputChange = (event) => {
-    setBuscador(event.target.value);
-  }*/
-
-
-
   useEffect(() => {
-    cargarPerros();
-  }, []);
+    cargarPerro();
+}, []);
 
-  
+const moverPerroIzquierda =() => {
+  setPerroRechazo(previousState => [...previousState, dog]);
+  setPerroArrepentido("izquierda");
+  cargarPerro();
+}
+const moverPerroDerecha =() => {
+  setPerroAcepto(previousState => [...previousState, dog]);
+  setPerroArrepentido("derecha");
+  cargarPerro();
+}
+const arrepentirPerro =() => {
+  if (perroarrepentido === "izquierda")
+  {
+    setPerroAcepto(previousState => [...previousState, perrorechazo[perrorechazo.length-1]]);
+    setPerroRechazo(perrorechazo.slice(0, -1));
+    setPerroArrepentido("derecha");
+  }
+  else if(perroarrepentido === "derecha")
+  {
+    setPerroRechazo(previousState => [...previousState, perroacepto[perroacepto.length-1]]);
+    setPerroAcepto(perroacepto.slice(0, -1));
+    setPerroArrepentido("izquierda");
+  }
+
+}
 
   return (
     <Container fixed sx={{ height: 1 }}>
@@ -61,26 +73,85 @@ const Home = () => {
           spacing={1}
           sx={{
             mt: 2,
-            height: 300,
-            overflow: "hidden",
-            overflowY: "scroll",
-            border: 1,
-          borderColor: "red",
-          }}
-        >
-          <Grid item md={6}
-          sx={{
-            mt: 2,
-            height: 150,
+            height: 400,
             overflow: "hidden",
             overflowY: "scroll",
             border: 1,
           borderColor: "blue",
+          alignItems:"center",
+          justifyContent:"center"
+          }}
+        >
+          <Grid item
+          sx={{
+            mt: 2,
+            height: 'auto',
+            overflow: "hidden",
+            overflowY: "scroll",
+            border: 1,
+            borderColor: "blue",
+            alignItems:"center",
+            justifyContent:"center"
           }}>
-            {listadoOriginal.map((element, index) => (
-              <Poke pokemon={element} key={index} />
-            ))}
+            {perrorechazo.map(function (perro, index)
+            {
+              return[
+                <img src={perro}
+                width='100' 
+                height='100'/>,
+                <br/>
+              ];
+            })
+            }
           </Grid>
+
+
+          <Grid item
+          sx={{
+            mt: 2,
+            height: '400',
+            overflow: "hidden",
+            overflowY: "scroll",
+            border: 1,
+            borderColor: "blue",
+          }}>
+            {
+              <div>
+              <img src={dog}
+              width='200' 
+              height='200'/>
+              <button onClick={moverPerroIzquierda}>  Mover el Perro
+              </button>
+              <button onClick={moverPerroDerecha}>  Mover el Perro derecha
+              </button>
+              <button onClick={arrepentirPerro}>  Arrepentido Perro
+              </button>
+              </div>
+              }
+          </Grid>
+
+          <Grid item
+          sx={{
+            mt: 2,
+            height: 'auto',
+            overflow: "hidden",
+            overflowY: "scroll",
+            border: 1,
+            borderColor: "blue",
+          }}>
+            {perroacepto.map(function (perro, index)
+            {
+              return[
+                <img src={perro}
+                width='100' 
+                height='100'/>,
+                <br/>
+              ];
+            })
+            }
+          </Grid>
+
+
         </Grid>
       </Box>
     </Container>
