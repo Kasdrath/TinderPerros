@@ -6,6 +6,7 @@ import {
   Container,
   Grid,
   TextField,
+  Typography,
 } from "@mui/material";
 import axios from "axios";
 
@@ -58,6 +59,74 @@ const arrepentirPerro =() => {
 
 }
 
+///////////////////////////////////
+
+
+function stringGen(len = 6) {
+  let alphanumeric =
+  "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+  let code = new Array();
+
+  for(let i=0; i<len; i++){
+    let index = Math.floor(Math.random() * alphanumeric.length);
+    code.push(alphanumeric.charAt(index));
+  }
+
+  code = code.join("")
+  return code;
+}
+
+
+/*return (
+
+  <Grid container spacing={2}>
+    <Grid item xs={4}
+    sx={{
+      mt: 2,
+      height: 150,
+      overflow: "hidden",
+      overflowY: "scroll",
+      border: 1,
+    borderColor: "red",
+    }}>
+      <Container>xs=4</Container>
+    </Grid>
+    <Grid item xs={4}
+    sx={{
+      mt: 2,
+      height: 150,
+      overflow: "hidden",
+      overflowY: "scroll",
+      border: 1,
+    borderColor: "blue",
+    }}>
+      <Container>
+        <Card style={{backgroundColor: "yellow"}}>
+          <CardContent>
+            <Typography style={{fontSize: 14}} color="textSecondary" textAlign="center">
+              {stringGen()}
+            </Typography>
+            {<img src="https://dog.ceo/api/breeds/image/random"/>}
+          </CardContent>
+        </Card>
+      </Container>
+    </Grid>
+    <Grid item xs={4}
+    sx={{
+      mt: 2,
+      height: 150,
+      overflow: "hidden",
+      overflowY: "scroll",
+      border: 1,
+    borderColor: "red",
+    }}>
+      <Container>xs=4</Container>
+    </Grid>
+  </Grid>
+);*/
+
+//////////////////////////////////
   return (
     <Container fixed sx={{ height: 1 }}>
       <Box
@@ -82,7 +151,7 @@ const arrepentirPerro =() => {
           justifyContent:"center"
           }}
         >
-          <Grid item
+          <Grid item xs={4}
           sx={{
             mt: 2,
             height: 'auto',
@@ -106,7 +175,7 @@ const arrepentirPerro =() => {
           </Grid>
 
 
-          <Grid item
+          <Grid item xs={4}
           sx={{
             mt: 2,
             height: '400',
@@ -115,22 +184,20 @@ const arrepentirPerro =() => {
             border: 1,
             borderColor: "blue",
           }}>
-            {
-              <div>
-              <img src={dog}
-              width='200' 
-              height='200'/>
-              <button onClick={moverPerroIzquierda}>  Mover el Perro
-              </button>
-              <button onClick={moverPerroDerecha}>  Mover el Perro derecha
-              </button>
-              <button onClick={arrepentirPerro}>  Arrepentido Perro
-              </button>
-              </div>
-              }
+            <Card>
+              <CardContent>
+                <Typography style={{fontSize: 14}} color="textSecondary" textAlign="center">
+                  {stringGen()}
+                </Typography>
+                {<img src={dog} width='200' height='200'/>}
+                {<button onClick={moverPerroIzquierda}>  Mover el Perro </button>}
+                {<button onClick={moverPerroDerecha}>  Mover el Perro derecha </button>}
+                {<button onClick={arrepentirPerro}>  Arrepentido Perro </button>}
+              </CardContent>
+            </Card>
           </Grid>
 
-          <Grid item
+          <Grid item xs={4}
           sx={{
             mt: 2,
             height: 'auto',
