@@ -13,6 +13,7 @@ import axios from "axios";
 const Home = () => {
 
   const [dog,setDog] = useState("");
+  const [nombrePerro, setNombre] = useState("");
   const [perroarrepentido, setPerroArrepentido] = useState("");
   const [perrorechazo, setPerroRechazo] = useState([]);
   const [perroacepto, setPerroAcepto] = useState([]);
@@ -22,6 +23,7 @@ const Home = () => {
      axios.get("https://dog.ceo/api/breeds/image/random").then(
       (response) => {
         setDog(response.data.message);
+        setNombre(stringGen());
       },
       (error) => {
         console.log(error);
@@ -186,15 +188,16 @@ function stringGen(len = 6) {
           }}>
             <Card>
               <CardContent>
-                <Typography style={{fontSize: 14}} color="textSecondary" textAlign="center">
-                  {stringGen()}
+                <Typography style={{fontSize: 14}} color="black" textAlign="center">
+                  {nombrePerro}
                 </Typography>
                 {<img src={dog} width='200' height='200'/>}
-                {<button onClick={moverPerroIzquierda}>  Mover el Perro </button>}
-                {<button onClick={moverPerroDerecha}>  Mover el Perro derecha </button>}
-                {<button onClick={arrepentirPerro}>  Arrepentido Perro </button>}
+                
               </CardContent>
             </Card>
+              {<button onClick={moverPerroIzquierda}>  Mover el Perro izquierda </button>}
+              {<button onClick={moverPerroDerecha}>  Mover el Perro derecha </button>}
+              {<button onClick={arrepentirPerro}>  Arrepentido Perro </button>}
           </Grid>
 
           <Grid item xs={4}
