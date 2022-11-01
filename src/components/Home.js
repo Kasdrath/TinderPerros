@@ -20,6 +20,7 @@ const Home = () => {
   let estilo = { backgroundColor: "red" };
 
   const cargarPerro = () => {
+    console.log(dog);
      axios.get("https://dog.ceo/api/breeds/image/random").then(
       (response) => {
         setDog(response.data.message);
@@ -58,8 +59,13 @@ const arrepentirPerro =() => {
     setPerroAcepto(perroacepto.slice(0, -1));
     setPerroArrepentido("izquierda");
   }
-
 }
+
+const handleClick = () => {
+
+  
+}
+
 
 ///////////////////////////////////
 
@@ -79,62 +85,10 @@ function stringGen(len = 6) {
   return code;
 }
 
-
-/*return (
-
-  <Grid container spacing={2}>
-    <Grid item xs={4}
-    sx={{
-      mt: 2,
-      height: 150,
-      overflow: "hidden",
-      overflowY: "scroll",
-      border: 1,
-    borderColor: "red",
-    }}>
-      <Container>xs=4</Container>
-    </Grid>
-    <Grid item xs={4}
-    sx={{
-      mt: 2,
-      height: 150,
-      overflow: "hidden",
-      overflowY: "scroll",
-      border: 1,
-    borderColor: "blue",
-    }}>
-      <Container>
-        <Card style={{backgroundColor: "yellow"}}>
-          <CardContent>
-            <Typography style={{fontSize: 14}} color="textSecondary" textAlign="center">
-              {stringGen()}
-            </Typography>
-            {<img src="https://dog.ceo/api/breeds/image/random"/>}
-          </CardContent>
-        </Card>
-      </Container>
-    </Grid>
-    <Grid item xs={4}
-    sx={{
-      mt: 2,
-      height: 150,
-      overflow: "hidden",
-      overflowY: "scroll",
-      border: 1,
-    borderColor: "red",
-    }}>
-      <Container>xs=4</Container>
-    </Grid>
-  </Grid>
-);*/
-
-//////////////////////////////////
   return (
     <Container fixed sx={{ height: 1 }}>
       <Box
         sx={{
-          border: 1,
-          borderColor: "red",
           height: 500,
           overflowY: "scroll",
         }}
@@ -147,8 +101,6 @@ function stringGen(len = 6) {
             height: 400,
             overflow: "hidden",
             overflowY: "scroll",
-            border: 1,
-          borderColor: "blue",
           alignItems:"center",
           justifyContent:"center"
           }}
@@ -159,8 +111,6 @@ function stringGen(len = 6) {
             height: 'auto',
             overflow: "hidden",
             overflowY: "scroll",
-            border: 1,
-            borderColor: "blue",
             alignItems:"center",
             justifyContent:"center"
           }}>
@@ -182,9 +132,7 @@ function stringGen(len = 6) {
             mt: 2,
             height: '400',
             overflow: "hidden",
-            overflowY: "scroll",
-            border: 1,
-            borderColor: "blue",
+            overflowY: "scroll"
           }}>
             <Card>
               <CardContent>
@@ -195,7 +143,7 @@ function stringGen(len = 6) {
                 
               </CardContent>
             </Card>
-              {<button onClick={moverPerroIzquierda}>  Mover el Perro izquierda </button>}
+              {<button onClick={moverPerroIzquierda;handleClick}>  Mover el Perro izquierda </button>}
               {<button onClick={moverPerroDerecha}>  Mover el Perro derecha </button>}
               {<button onClick={arrepentirPerro}>  Arrepentido Perro </button>}
           </Grid>
@@ -205,9 +153,7 @@ function stringGen(len = 6) {
             mt: 2,
             height: 'auto',
             overflow: "hidden",
-            overflowY: "scroll",
-            border: 1,
-            borderColor: "blue",
+            overflowY: "scroll"
           }}>
             {perroacepto.map(function (perro, index)
             {
