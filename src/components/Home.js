@@ -17,6 +17,7 @@ const Home = () => {
   const [perroarrepentido, setPerroArrepentido] = useState("");
   const [perrorechazo, setPerroRechazo] = useState([]);
   const [perroacepto, setPerroAcepto] = useState([]);
+  const [disable, setDisable] = useState("");
   let estilo = { backgroundColor: "red" };
 
   const cargarPerro = () => {
@@ -25,6 +26,7 @@ const Home = () => {
       (response) => {
         setDog(response.data.message);
         setNombre(stringGen());
+        setDisable(false);
       },
       (error) => {
         console.log(error);
@@ -37,38 +39,34 @@ const Home = () => {
 }, []);
 
 const moverPerroIzquierda =() => {
+  setDisable(true);
   setPerroRechazo(previousState => [...previousState, dog]);
   setPerroArrepentido("izquierda");
   cargarPerro();
 }
 const moverPerroDerecha =() => {
+  setDisable(true);
   setPerroAcepto(previousState => [...previousState, dog]);
   setPerroArrepentido("derecha");
   cargarPerro();
 }
 const arrepentirPerro =() => {
+  setDisable(true);
   if (perroarrepentido === "izquierda")
   {
     setPerroAcepto(previousState => [...previousState, perrorechazo[perrorechazo.length-1]]);
     setPerroRechazo(perrorechazo.slice(0, -1));
     setPerroArrepentido("derecha");
+    setDisable(false);
   }
   else if(perroarrepentido === "derecha")
   {
     setPerroRechazo(previousState => [...previousState, perroacepto[perroacepto.length-1]]);
     setPerroAcepto(perroacepto.slice(0, -1));
     setPerroArrepentido("izquierda");
+    setDisable(false);
   }
 }
-
-const handleClick = () => {
-
-  
-}
-
-
-///////////////////////////////////
-
 
 function stringGen(len = 6) {
   let alphanumeric =
@@ -143,9 +141,9 @@ function stringGen(len = 6) {
                 
               </CardContent>
             </Card>
-              {<button onClick={moverPerroIzquierda;handleClick}>  Mover el Perro izquierda </button>}
-              {<button onClick={moverPerroDerecha}>  Mover el Perro derecha </button>}
-              {<button onClick={arrepentirPerro}>  Arrepentido Perro </button>}
+              {<button onClick={moverPerroIzquierda} disabled={disable}>  Mover el Perro izquierda </button>}
+              {<button onClick={moverPerroDerecha} disabled={disable}>  Mover el Perro derecha </button>}
+              {<button onClick={arrepentirPerro} disabled={disable}>  Arrepentido Perro </button>}
           </Grid>
 
           <Grid item xs={4}
