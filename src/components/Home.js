@@ -81,14 +81,14 @@ function stringGen(len = 6) {
 }
 
   return (
-    <Container fixed sx={{ height: 1 }}>
+    /*<Container fixed sx={{ height: 1 }}>
       <Box
         sx={{
           height: 500,
           overflowY: "scroll",
         }}
       >
-        <Grid
+        <Grid item md={6}
           container
           spacing={1}
           sx={{
@@ -98,9 +98,9 @@ function stringGen(len = 6) {
             overflowY: "scroll",
           alignItems:"center",
           justifyContent:"center"
-          }}
-        >
+          }}>
           <Grid item xs={4}
+
           sx={{
             mt: 2,
             height: 'auto',
@@ -167,8 +167,51 @@ function stringGen(len = 6) {
 
         </Grid>
       </Box>
-    </Container>
-    
+    </Container>*/
+    <Grid container spacing={2}>
+      <Grid item xs={4}
+      sx={{
+        mt: 2,
+        height: 150,
+        overflow: "hidden",
+        overflowY: "scroll",
+        border: 1,
+      borderColor: "red",
+      }}>
+        <Container>xs=4</Container>
+      </Grid>
+      <Grid item xs={4}
+      sx={{
+        mt: 2,
+        height: 150,
+        overflow: "hidden",
+        overflowY: "scroll",
+        border: 1,
+      borderColor: "blue",
+      }}>
+        <Container>
+          <Card style={{backgroundColor: "yellow"}}>
+            <CardContent>
+              <Typography style={{fontSize: 14}} color="textSecondary" textAlign="center">
+                {stringGen()}
+              </Typography>
+              {<img src="https://dog.ceo/api/breeds/image/random"/>}
+            </CardContent>
+          </Card>
+        </Container>
+      </Grid>
+      <Grid item xs={4}
+      sx={{
+        mt: 2,
+        height: 150,
+        overflow: "hidden",
+        overflowY: "scroll",
+        border: 1,
+      borderColor: "red",
+      }}>
+        <Container>xs=4</Container>
+      </Grid>
+    </Grid>
   );
 };
 export default Home;
