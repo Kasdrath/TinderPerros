@@ -51,17 +51,20 @@ const moverPerroDerecha =() => {
   cargarPerro();
 }
 const arrepentirPerro =() => {
+  setDisable(true);
   if (perroarrepentido === "izquierda")
   {
     setPerroAcepto(previousState => [...previousState, perrorechazo[perrorechazo.length-1]]);
     setPerroRechazo(perrorechazo.slice(0, -1));
     setPerroArrepentido("derecha");
+    setDisable(false);
   }
   else if(perroarrepentido === "derecha")
   {
     setPerroRechazo(previousState => [...previousState, perroacepto[perroacepto.length-1]]);
     setPerroAcepto(perroacepto.slice(0, -1));
     setPerroArrepentido("izquierda");
+    setDisable(false);
   }
 }
 
@@ -81,14 +84,14 @@ function stringGen(len = 6) {
 }
 
   return (
-    /*<Container fixed sx={{ height: 1 }}>
+    <Container fixed sx={{ height: 1 }}>
       <Box
         sx={{
           height: 500,
           overflowY: "scroll",
         }}
       >
-        <Grid item md={6}
+        <Grid
           container
           spacing={1}
           sx={{
@@ -98,9 +101,9 @@ function stringGen(len = 6) {
             overflowY: "scroll",
           alignItems:"center",
           justifyContent:"center"
-          }}>
+          }}
+        >
           <Grid item xs={4}
-
           sx={{
             mt: 2,
             height: 'auto',
@@ -109,7 +112,6 @@ function stringGen(len = 6) {
             alignItems:"center",
             justifyContent:"center"
           }}>
-            <Typography style={{fontSize: 14}} backgroundColor="white" borderColor="grey" border={1} color="black" textAlign="center">Perros Rechazados</Typography>
             {perrorechazo.map(function (perro, index)
             {
               return[
@@ -139,9 +141,9 @@ function stringGen(len = 6) {
                 
               </CardContent>
             </Card>
-              {<button onClick={moverPerroIzquierda} disabled={disable}>  Rechazar Perro </button>}
-              {<button onClick={moverPerroDerecha} disabled={disable}>  Aceptar Perro </button>}
-              {<button onClick={arrepentirPerro} disabled={disable}>  ¡Me arrepentí de mi última elección! </button>}
+              {<button onClick={moverPerroIzquierda} disabled={disable}>  Mover el Perro izquierda </button>}
+              {<button onClick={moverPerroDerecha} disabled={disable}>  Mover el Perro derecha </button>}
+              {<button onClick={arrepentirPerro} disabled={disable}>  Arrepentido Perro </button>}
           </Grid>
 
           <Grid item xs={4}
@@ -151,7 +153,6 @@ function stringGen(len = 6) {
             overflow: "hidden",
             overflowY: "scroll"
           }}>
-            <Typography style={{fontSize: 14}} backgroundColor="white" borderColor="grey" border={1} color="black" textAlign="center">Perros Aceptados</Typography>
             {perroacepto.map(function (perro, index)
             {
               return[
@@ -167,51 +168,8 @@ function stringGen(len = 6) {
 
         </Grid>
       </Box>
-    </Container>*/
-    <Grid container spacing={2}>
-      <Grid item xs={4}
-      sx={{
-        mt: 2,
-        height: 150,
-        overflow: "hidden",
-        overflowY: "scroll",
-        border: 1,
-      borderColor: "red",
-      }}>
-        <Container>xs=4</Container>
-      </Grid>
-      <Grid item xs={4}
-      sx={{
-        mt: 2,
-        height: 150,
-        overflow: "hidden",
-        overflowY: "scroll",
-        border: 1,
-      borderColor: "blue",
-      }}>
-        <Container>
-          <Card style={{backgroundColor: "yellow"}}>
-            <CardContent>
-              <Typography style={{fontSize: 14}} color="textSecondary" textAlign="center">
-                {stringGen()}
-              </Typography>
-              {<img src="https://dog.ceo/api/breeds/image/random"/>}
-            </CardContent>
-          </Card>
-        </Container>
-      </Grid>
-      <Grid item xs={4}
-      sx={{
-        mt: 2,
-        height: 150,
-        overflow: "hidden",
-        overflowY: "scroll",
-        border: 1,
-      borderColor: "red",
-      }}>
-        <Container>xs=4</Container>
-      </Grid>
-    </Grid>
+    </Container>
+    
   );
 };
 export default Home;
