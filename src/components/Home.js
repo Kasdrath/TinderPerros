@@ -112,6 +112,7 @@ function stringGen(len = 6) {
             alignItems:"center",
             justifyContent:"center"
           }}>
+            <Typography style={{fontSize: 14}} backgroundColor="white" borderColor="grey" border={2} color="black" textAlign="center">Perros Rechazados</Typography>
             {perrorechazo.map(function (perro, index)
             {
               return[
@@ -141,9 +142,9 @@ function stringGen(len = 6) {
                 
               </CardContent>
             </Card>
-              {<button onClick={moverPerroIzquierda} disabled={disable}>  Mover el Perro izquierda </button>}
-              {<button onClick={moverPerroDerecha} disabled={disable}>  Mover el Perro derecha </button>}
-              {<button onClick={arrepentirPerro} disabled={disable}>  Arrepentido Perro </button>}
+              {<button onClick={moverPerroIzquierda} disabled={disable}>  Rechazar Perro </button>}
+              {<button onClick={moverPerroDerecha} disabled={disable}>  Aceptar Perro </button>}
+              {<button onClick={arrepentirPerro} disabled={disable}>  !Me arrepentí de mi última elección! </button>}
           </Grid>
 
           <Grid item xs={4}
@@ -153,6 +154,7 @@ function stringGen(len = 6) {
             overflow: "hidden",
             overflowY: "scroll"
           }}>
+            <Typography style={{fontSize: 14}} backgroundColor="white" borderColor="grey" border={2} color="black" textAlign="center">Perros Aceptados</Typography>
             {perroacepto.map(function (perro, index)
             {
               return[
