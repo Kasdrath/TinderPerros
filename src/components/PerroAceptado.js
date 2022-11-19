@@ -10,6 +10,7 @@ import {
     Collapse,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { red } from '@mui/material/colors';
 import IconButton from '@mui/material/IconButton';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
@@ -25,13 +26,13 @@ const ExpandMore = styled((props) => {
     }),
 }));
 
-export default function ReviewCard(nombreP, descP, fotoP, style = null, funct = null) {
+export default function ReviewCard() {
     const [expanded, setExpanded] = React.useState(false);
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
 
-    const PerroCandidato = ({ nombre = nombreP, descripcion = descP, foto = fotoP, estilo = style, funcion = funct }) => {
+    const PerroAceptado = ({ nombre, descripcion, foto, estilo = null, funcion = null }) => {
         return (
             <Card sx={estilo}>
                 <CardContent>
@@ -42,11 +43,17 @@ export default function ReviewCard(nombreP, descP, fotoP, style = null, funct = 
                         image={foto} />
                 </CardContent>
                 <CardActions>
+                    <IconButton aria-label="¡Me arrepentí!" onClick={funcion}>
+                        <ThumbDownIcon sx={{
+                            color: "red",
+                        }} />
+                    </IconButton>
                     <ExpandMore
                         expand={expanded}
                         onClick={handleExpandClick}
                         aria-expanded={expanded}
-                        aria-label="Mostrar más">
+                        aria-label="Mostrar más"
+                    >
                         <ExpandMoreIcon />
                     </ExpandMore>
                 </CardActions>
