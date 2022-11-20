@@ -13,10 +13,12 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import axios from "axios";
 import PerroQuery, { buscarInfoQuery, useBuscarInfoQuery } from "../Queries/PerroQuery";
 import { RestorePageOutlined } from "@mui/icons-material";
-
 import perroCandidato from "./PerroCandidato.js"
 import { PerroAceptado } from "./PerroAceptado.js"
 import { PerroRechazado } from "./PerroRechazado.js"
+
+
+
 
 
 const Home = () => {
@@ -35,6 +37,7 @@ const Home = () => {
     isError: errors,
     isRefetching: disable,
   } = useBuscarInfoQuery(auxx);
+
 
   const moverPerroIzquierda = () => {
     setDisable(true);
