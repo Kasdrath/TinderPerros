@@ -1,5 +1,8 @@
 import { useQuery, queryCache } from "@tanstack/react-query";
 import axios from "axios";
+import { loremIpsum } from "lorem-ipsum";
+
+
 
 export function useBuscarInfoQuery(auxx) {
     return useQuery(["buscarInfoQuery", auxx], buscarInfoQuery, {
@@ -17,7 +20,8 @@ export const buscarInfoQuery = async () => {
     let perro = {
         foto: data.message,
         nombre: "abc",
-        descripcion: "abcd"
+        descripcion: loremIpsum()
     }
+    console.log("descripcion del perro", perro.descripcion);
     return perro;
 };
