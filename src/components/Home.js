@@ -1,34 +1,46 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Box,
   Card,
+  CardActions,
   CardContent,
+  CardHeader,
+  CardMedia,
   Container,
+  Collapse,
+  CircularProgress,
   Grid,
   Typography,
   IconButton,
 } from "@mui/material";
+import { styled } from '@mui/material/styles';
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
-import axios from "axios";
 import PerroQuery, { buscarInfoQuery, useBuscarInfoQuery } from "../Queries/PerroQuery";
-import { RestorePageOutlined } from "@mui/icons-material";
-import perroCandidato from "./PerroCandidato.js"
-import { PerroAceptado } from "./PerroAceptado.js"
-import { PerroRechazado } from "./PerroRechazado.js"
 
-
-
-
+const ExpandMore = styled((props) => {
+  const { expand, ...other } = props;
+  return <IconButton {...other} />;
+})(({ theme, expand }) => ({
+  transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
+  marginLeft: 'auto',
+  transition: theme.transitions.create('transform', {
+    duration: theme.transitions.duration.shortest,
+  }),
+}));
 
 const Home = () => {
   const [auxx, setAuxx] = useState("");
-  //const [dog, setDog] = useState("");
-  const [nombrePerro, setNombre] = useState("");
-  const [perroarrepentido, setPerroArrepentido] = useState("");
   const [perrorechazo, setPerroRechazo] = useState([]);
   const [perroacepto, setPerroAcepto] = useState([]);
   const [disablex, setDisable] = useState("");
+  const [expanded, setExpanded] = React.useState(false);
+
+
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
 
   const {
     data: dog,
@@ -41,51 +53,50 @@ const Home = () => {
 
   const moverPerroIzquierda = () => {
     setDisable(true);
-    setPerroRechazo(previousState => [...previousState, dog.foto]);
-    setPerroArrepentido("izquierda");
+    setPerroRechazo(previousState => [dog, ...previousState]);
     cargarPerro();
+    console.log("valr", dog.expandex);
+
   }
   const moverPerroDerecha = () => {
-    console.log(perroacepto[0]);
     setDisable(true);
-    setPerroAcepto(previousState => [...previousState, dog.foto]);
-    setPerroArrepentido("derecha");
+    setPerroAcepto(previousState => [dog, ...previousState]);
     cargarPerro();
   }
-  const arrepentirPerroAcepto = () => {
-    if (perroarrepentido === "derecha") {
-      setPerroRechazo(previousState => [...previousState, perroacepto[perroacepto.length - 1]]);
-      setPerroAcepto(perroacepto.slice(0, -1));
-      /*setPerroArrepentido("izquierda");*/
-      setDisable(false);
-    }
-  }
-  const arrepentirPerroRechazo = () => {
+  const arrepentirPerroAcepto = (index) => {
     setDisable(true);
-    if (perroarrepentido === "izquierda") {
-      setPerroAcepto(previousState => [...previousState, perrorechazo[perrorechazo.length - 1]]);
-      setPerroRechazo(perrorechazo.slice(0, -1));
-      /*setPerroArrepentido("derecha");*/
-      setDisable(false);
-    }
+    //setPerroRechazo(previousState => [...previousState, perroacepto[index]]);
+    setPerroRechazo(previousState => [perroacepto[index], ...previousState]);
+    let tmpAcepto = [...perroacepto];
+    tmpAcepto.splice(index, 1);
+    setPerroAcepto(tmpAcepto);
+    setDisable(false);
+  }
+  const arrepentirPerroRechazo = (index) => {
+    setDisable(true);
+    //setPerroAcepto(previousState => [...previousState, perrorechazo[index]]);
+    setPerroAcepto(previousState => [perrorechazo[index], ...previousState]);
+    let tmpRechazo = [...perrorechazo];
+    tmpRechazo.splice(index, 1);
+    setPerroRechazo(tmpRechazo);
+    setDisable(false);
   }
 
-  function stringGen(len = 6) {
-    let alphanumeric =
-      "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-
-    let code = new Array();
-
-    for (let i = 0; i < len; i++) {
-      let index = Math.floor(Math.random() * alphanumeric.length);
-      code.push(alphanumeric.charAt(index));
-    }
-
-    code = code.join("")
-    return code;
+  const expandedRechazo = (index) => {
+    /*console.log("valror despues ", dog.expandex);
+    console.log(index);
+    console.log("entrada  ", perrorechazo[index].expandex);
+    perrorechazo[index].expandex = !perrorechazo[index].expandex;
+    console.log("salida  ", perrorechazo[index].expandex);
+    console.log("valror despuesxxx ", dog.expandex);*/
+  }
+  const expandedAcepto = (valorexpanded) => {
+    dog.expandex = !valorexpanded;
+    return dog.expandex;
   }
 
-  //const perro = new perroCandidato.ReviewCard("a", "b", "c", null, null);
+
+
 
   return (
     <Container fixed sx={{ height: 1 }}>
@@ -100,7 +111,7 @@ const Home = () => {
           spacing={1}
           sx={{
             mt: 2,
-            height: 400,
+            height: 500,
             overflow: "hidden",
             overflowY: "scroll",
             alignItems: "center",
@@ -116,18 +127,52 @@ const Home = () => {
               alignItems: "center",
               justifyContent: "center"
             }}>
-            <Typography style={{ fontSize: 14 }} backgroundColor="white" borderColor="grey" border={2} color="black" textAlign="center">Perros Rechazados</Typography>
-            {perrorechazo.map(function (perro, index) {
-              return [
-                <img src={perro}
-                  width='100'
-                  height='100'
-                  alt="perros rechazados" />,
-                <button onClick={arrepentirPerroRechazo} disabled={disable}>  !Me arrepentí de mi última elección! </button>,
-                <br />
-              ];
-            })
-            }
+            <Card>
+              {disable && <CircularProgress />}
+
+              <CardContent>
+                <CardHeader title={dog && dog.nombre} />
+                <CardMedia
+                  component="img"
+                  height="250"
+                  image={dog && dog.foto} />
+              </CardContent>
+              <CardActions>
+                <ExpandMore
+                  expand={expanded}
+                  onClick={handleExpandClick}
+                  aria-expanded={expanded}
+                  aria-label="Mostrar más"
+                >
+
+                  <ExpandMoreIcon />
+                </ExpandMore>
+              </CardActions>
+              <Collapse in={expanded} timeout="auto" unmountOnExit>
+                <CardContent>
+                  <Typography paragraph>{dog && dog.descripcion}</Typography>
+                </CardContent>
+              </Collapse>
+            </Card>
+            <Box textAlign='center'>
+              <IconButton
+                onClick={moverPerroIzquierda}
+                disabled={disable}
+              >
+                <ThumbDownIcon sx={{
+                  color: "red",
+                }} />
+              </IconButton>
+              <IconButton
+                onClick={moverPerroDerecha}
+                disabled={disable}
+              >
+                <ThumbUpIcon sx={{
+                  color: "green",
+                }} />
+              </IconButton>
+            </Box>
+
           </Grid>
 
 
@@ -138,30 +183,43 @@ const Home = () => {
               overflow: "hidden",
               overflowY: "scroll"
             }}>
-            <Card>
-              {disable && "Cargando"}
-              <CardContent>
-                <Typography style={{ fontSize: 14 }} color="black" textAlign="center">
-                  {dog && dog.nombre}
-                </Typography>
-                {<img src={dog && dog.foto} width='200' height='200' alt="perros postulantes" />}
+            <Typography style={{ fontSize: 14 }} backgroundColor="white" borderColor="grey" border={2} color="black" textAlign="center">Perros Aceptados</Typography>
+            {perroacepto.map(function (dog, index) {
+              return [
+                <Card>
+                  <CardContent>
+                    <CardHeader title={dog.nombre} />
+                    <CardMedia
+                      component="img"
+                      height="200"
+                      image={dog.foto} />
+                  </CardContent>
+                  <CardActions>
+                    <IconButton aria-label="¡Me arrepentí!" key={dog} onClick={() => arrepentirPerroAcepto(index)}>
+                      <ThumbDownIcon sx={{
+                        color: "red",
+                      }} />
+                    </IconButton>
+                    <ExpandMore
+                      expand={expanded}
+                      onClick={handleExpandClick}
+                      aria-expanded={expanded}
+                      aria-label="Mostrar más">
+                      <ExpandMoreIcon />
+                    </ExpandMore>
+                  </CardActions>
+                  <Collapse in={expanded} timeout="auto" unmountOnExit>
+                    <CardContent>
+                      <Typography paragraph>{dog.descripcion}</Typography>
+                    </CardContent>
+                  </Collapse>
+                </Card>
+              ];
+            })
+            }
 
-              </CardContent>
-            </Card>
-            <IconButton
-              onClick={moverPerroIzquierda}
-              disabled={disable}
-            >
-              <ThumbDownIcon />
-            </IconButton>
-            <IconButton
-              onClick={moverPerroDerecha}
-              disabled={disable}
-            >
-              <ThumbUpIcon />
-            </IconButton>
-            {<button onClick={moverPerroIzquierda} disabled={disable}>  Rechazar Perro </button>}
-            {<button onClick={moverPerroDerecha} disabled={disable}>  Aceptar Perro </button>}
+            {/*<button onClick={moverPerroIzquierda} disabled={disable}>  Rechazar Perro </button>*/}
+            {/*<button onClick={moverPerroDerecha} disabled={disable}>  Aceptar Perro </button>*/}
 
           </Grid>
 
@@ -172,18 +230,46 @@ const Home = () => {
               overflow: "hidden",
               overflowY: "scroll"
             }}>
-            <Typography style={{ fontSize: 14 }} backgroundColor="white" borderColor="grey" border={2} color="black" textAlign="center">Perros Aceptados</Typography>
-            {perroacepto.map(function (perro, index) {
+            <Typography style={{ fontSize: 14 }} backgroundColor="white" borderColor="grey" border={2} color="black" textAlign="center">Perros Rechazados</Typography>
+            {perrorechazo.map(function (dog, index) {
               return [
-                <img src={perro}
-                  width='100'
-                  height='100'
-                  alt="perros aceptados" />,
-                <button onClick={arrepentirPerroAcepto} disabled={disable}>  !Me arrepentí de mi última elección! </button>,
-                <br />
+
+                <Card>
+                  <CardContent>
+                    <CardHeader title={dog.nombre} />
+                    <CardMedia
+                      component="img"
+                      height="200"
+                      image={dog.foto} />
+                  </CardContent>
+                  <CardActions>
+                    <IconButton aria-label="¡Me arrepentí!" key={dog} onClick={() => arrepentirPerroRechazo(index)}>
+                      <ThumbUpIcon sx={{
+                        color: "green",
+                      }} />
+                    </IconButton>
+                    <ExpandMore
+                      //key={index}
+                      expand={expanded}
+                      onClick={handleExpandClick}
+                      aria-expanded={expanded}
+                      aria-label="Mostrar más"
+                    >
+
+                      <ExpandMoreIcon />
+                    </ExpandMore>
+                  </CardActions>
+                  <Collapse in={expanded} timeout="auto" unmountOnExit>
+                    <CardContent>
+                      <Typography paragraph>{dog.descripcion}</Typography>
+                    </CardContent>
+                  </Collapse>
+                </Card>
               ];
             })
             }
+
+
           </Grid>
 
 

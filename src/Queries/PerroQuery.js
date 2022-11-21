@@ -14,14 +14,29 @@ export function useBuscarInfoQuery(auxx) {
     });
 }
 
+function stringGen(len = 6) {
+    let alphanumeric =
+        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+    let code = new Array();
+
+    for (let i = 0; i < len; i++) {
+        let index = Math.floor(Math.random() * alphanumeric.length);
+        code.push(alphanumeric.charAt(index));
+    }
+
+    code = code.join("")
+    return code;
+}
+
 export const buscarInfoQuery = async () => {
     const { data } = await axios.get("https://dog.ceo/api/breeds/image/random");
-    //console.log(data.message);
     let perro = {
         foto: data.message,
-        nombre: "abc",
-        descripcion: loremIpsum()
+        nombre: stringGen(),
+        descripcion: loremIpsum(),
+        expandex: false
+        ////////////////////////
     }
-    console.log("descripcion del perro", perro.descripcion);
     return perro;
 };
